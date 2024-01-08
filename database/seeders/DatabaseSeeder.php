@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
         ]);
 
+        User::factory()->create([
+            'name' => 'luigi',
+            'email' => 'luigi@gmail.com',
+        ]);
+
         $user = User::factory()->create([
             'name' => 'mario',
             'email' => 'mario@gmail.com',
@@ -27,7 +32,5 @@ class DatabaseSeeder extends Seeder
         ScheduledClass::factory(5)->create([
             'instructor_id' => $user->id,
         ]);
-
-        User::factory(3)->create();
     }
 }
