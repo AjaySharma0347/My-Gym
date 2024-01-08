@@ -22,9 +22,12 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-    Route::get('/{role}/dashboard', [DashboardController::class, 'show'])
-        ->where('role', 'member|instructor|admin')
-        ->name('dashboard.role');
+    // Route::get('/{role}/dashboard', [DashboardController::class, 'show'])
+    //     ->where('role', 'member|instructor|admin')
+    //     ->name('dashboard.role');
+    Route::get('/member/dashboard', [DashboardController::class, 'member'])->middleware('role:member')->name('dashboard.member');
+    Route::get('/instructor/dashboard', [DashboardController::class, 'instructor'])->middleware('role:instructor')->name('dashboard.instructor');
+    Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->middleware('role:admin')->name('dashboard.admin');
 });
 
 Route::middleware('auth')->group(function () {

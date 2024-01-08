@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 class DashboardController extends Controller
 {
@@ -14,19 +14,34 @@ class DashboardController extends Controller
     {
         switch (auth()->user()?->role) {
             case 'member':
-                // return redirect()->route('dashboard.role', ['role' => 'member']);
-                return redirect()->route('dashboard.role', 'member');
+                // return redirect()->route('dashboard.member', ['role' => 'member']);
+                return to_route('dashboard.member', 'member');
             case 'instructor':
-                return redirect()->route('dashboard.role', 'instructor');
+                return to_route('dashboard.instructor', 'instructor');
             case 'admin':
-                return redirect()->route('dashboard.role', 'admin');
+                return to_route('dashboard.admin', 'admin');
             default:
-                return redirect()->route('login');
+                return to_route('login');
         }
     }
 
-    public function show($role)
+    // public function show($role)
+    // {
+    //     return View::exists("dashboard.$role") ? view("dashboard.$role") : abort(404);
+    // }
+
+    public function member()
     {
-        return View::exists("dashboard.$role") ? view("dashboard.$role") : abort(404);
+        return view('dashboard.member');
+    }
+
+    public function instructor()
+    {
+        return view('dashboard.instructor');
+    }
+
+    public function admin()
+    {
+        return view('dashboard.admin');
     }
 }
