@@ -17,9 +17,13 @@ class CheckUserRole
     {
         $userRole = auth()->user()?->role;
 
+        if (!$userRole) {
+            // abort(403, 'Can not access this route');
+            return to_route('dashboard');
+        }
+
         if (!in_array($userRole, $roles)) {
-            // abort(401, 'Can not access this route');
-            return to_route("dashboard.$userRole", $userRole);
+            return to_route("$userRole.dashboard", $userRole);
         }
 
         return $next($request);
