@@ -14,12 +14,12 @@ class DashboardController extends Controller
     {
         switch (auth()->user()?->role) {
             case 'member':
-                // return redirect()->route('dashboard.member', ['role' => 'member']);
-                return to_route('dashboard.member');
+                // return redirect()->route('member.dashboard', ['role' => 'member']);
+                return to_route('member.dashboard');
             case 'instructor':
-                return to_route('dashboard.instructor');
+                return to_route('instructor.dashboard');
             case 'admin':
-                return to_route('dashboard.admin');
+                return to_route('admin.dashboard');
             default:
                 return to_route('login');
         }
@@ -27,21 +27,21 @@ class DashboardController extends Controller
 
     // public function show($role)
     // {
-    //     return View::exists("dashboard.$role") ? view("dashboard.$role") : abort(404);
+    //     return View::exists("$role.dashboard") ? view("$role.dashboard") : abort(404);
     // }
 
     public function member()
     {
-        return view('dashboard.member');
+        return view('member.dashboard');
     }
 
     public function instructor()
     {
-        return view('dashboard.instructor');
+        return view('instructor.dashboard');
     }
 
     public function admin()
     {
-        return view('dashboard.admin');
+        return view('admin.dashboard');
     }
 }
