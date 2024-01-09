@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ScheduledClassController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +26,14 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/{role}/dashboard', [DashboardController::class, 'show'])
     //     ->where('role', 'member|instructor|admin')
     //     ->name('dashboard.role');
-    Route::get('/member/dashboard', [DashboardController::class, 'member'])->middleware('role:member')->name('dashboard.member');
-    Route::get('/instructor/dashboard', [DashboardController::class, 'instructor'])->middleware('role:instructor')->name('dashboard.instructor');
-    Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->middleware('role:admin')->name('dashboard.admin');
+    Route::get('/member/dashboard', [DashboardController::class, 'member'])->middleware('role:member')->name('member.dashboard');
+    Route::get('/instructor/dashboard', [DashboardController::class, 'instructor'])->middleware('role:instructor')->name('instructor.dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->middleware('role:admin')->name('admin.dashboard');
 });
+
+Route::resource('/instructor/schedule', ScheduledClassController::class)
+    ->only(['index', 'create', 'store', 'destroy'])
+    ->middleware('role:instructor');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
