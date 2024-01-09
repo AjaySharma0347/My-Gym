@@ -11,7 +11,15 @@ class ScheduledClass extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'instructor_id',
+        'date_time',
+        'class_type_id',
+    ];
+
+    protected $casts = [
+        'date_time' => 'datetime',
+    ];
 
     public function instructor()
     {
