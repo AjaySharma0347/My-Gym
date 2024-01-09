@@ -15,11 +15,11 @@ class DashboardController extends Controller
         switch (auth()->user()?->role) {
             case 'member':
                 // return redirect()->route('dashboard.member', ['role' => 'member']);
-                return to_route('dashboard.member', 'member');
+                return to_route('dashboard.member');
             case 'instructor':
-                return to_route('dashboard.instructor', 'instructor');
+                return to_route('dashboard.instructor');
             case 'admin':
-                return to_route('dashboard.admin', 'admin');
+                return to_route('dashboard.admin');
             default:
                 return to_route('login');
         }
