@@ -17,7 +17,7 @@ class ClassTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->sentence(),
+            'name' => fake()->words(rand(1, 2), true),
             'description' => fake()->paragraph(1),
             'duration_in_minutes' => fake()->randomNumber(3),
         ];
