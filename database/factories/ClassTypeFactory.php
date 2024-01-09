@@ -19,7 +19,8 @@ class ClassTypeFactory extends Factory
         return [
             'name' => fake()->words(rand(1, 2), true),
             'description' => fake()->paragraph(1),
-            'duration_in_minutes' => fake()->randomNumber(3),
+            'duration_in_minutes' => rand(15, 90),
+            // 'duration_in_minutes' => fake()->randomNumber(2),
         ];
     }
 }
