@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -34,6 +35,13 @@ Route::middleware(['auth'])->group(function () {
 Route::resource('/instructor/schedule', ScheduledClassController::class)
     ->only(['index', 'create', 'store', 'destroy'])
     ->middleware('role:instructor');
+
+Route::middleware('role:member')->group(function () {
+    Route::get('/member/bookings', [BookingController::class, 'index'])->name('booking.index');
+    Route::get('/member/bookings/create', [BookingController::class, 'create'])->name('booking.create');
+    Route::post('/member/bookings', [BookingController::class, 'store'])->name('booking.store');
+    Route::delete('/member/bookings/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
