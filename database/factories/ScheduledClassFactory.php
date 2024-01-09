@@ -21,7 +21,7 @@ class ScheduledClassFactory extends Factory
         return [
             'instructor_id' => User::factory(),
             'class_type_id' => ClassType::factory(),
-            'date_time' => fake()->unique()->dateTime(),
+            'date_time' => fake()->unique()->dateTimeBetween('now', '+1 month'),
         ];
     }
 }
