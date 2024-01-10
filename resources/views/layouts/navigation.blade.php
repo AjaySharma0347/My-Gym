@@ -23,6 +23,15 @@
                         Upcoming Classes
                     </x-nav-link>
                     @endcan
+
+                    @can('book-class')
+                    <x-nav-link :href="route('bookings.create')" :active="request()->routeIs('bookings.create')">
+                        Book a Class
+                    </x-nav-link>
+                    <x-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
+                        Upcoming Classes
+                    </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -79,8 +88,17 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             @can('schedule-class')
-            <x-responsive-nav-link :href="route('schedule.create')" :active="request()->routeIs('schedule.create')">
+            <x-responsive-nav-link :href="route('bookings.create')" :active="request()->routeIs('bookings.create')">
                 Schedule a Class
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
+                Upcoming Classes
+            </x-responsive-nav-link>
+            @endcan
+
+            @can('schedule-class')
+            <x-responsive-nav-link :href="route('schedule.create')" :active="request()->routeIs('schedule.create')">
+                Book a Class
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('schedule.index')" :active="request()->routeIs('schedule.index')">
                 Upcoming Classes
