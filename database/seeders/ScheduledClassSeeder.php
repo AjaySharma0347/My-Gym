@@ -14,7 +14,7 @@ class ScheduledClassSeeder extends Seeder
      */
     public function run(): void
     {
-        ScheduledClass::factory(5)->create([
+        ScheduledClass::factory(10)->create([
             'instructor_id' => User::firstWhere('role', 'instructor'),
         ]);
     }
