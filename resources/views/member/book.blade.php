@@ -39,6 +39,11 @@
                      <p>No classes are scheduled. Check back later.</p>
                   </div>
                   @endforelse
+                  @if ($scheduledClasses->lastPage() > 1)
+                    <div class="pt-6">
+                        {{ $scheduledClasses->links() }}
+                    </div>
+                  @endif
                 </div>
             </div>
         </div>
