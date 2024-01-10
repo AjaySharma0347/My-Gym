@@ -21,6 +21,8 @@ class ScheduledClass extends Model
         'date_time' => 'datetime',
     ];
 
+    protected $with = ['classType'];
+
     public function instructor()
     {
         return $this->belongsTo(User::class);
@@ -33,6 +35,6 @@ class ScheduledClass extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'bookings');
+        return $this->belongsToMany(User::class, 'bookings')->withTimestamps();
     }
 }
