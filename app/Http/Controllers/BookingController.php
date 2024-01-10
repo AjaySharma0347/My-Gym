@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ScheduledClass;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
 
 class BookingController extends Controller
 {
@@ -11,7 +14,11 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = auth()->user()->bookings()
+            ->where('date_time', '>', now())
+            ->oldest('date_time')->get();
+
+        return view('member.upcoming')->with('bookings', $bookings);
     }
 
     /**
@@ -19,7 +26,13 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        $scheduledClasses = ScheduledClass::where('date_time', '>', now())
+            ->whereDoesntHave('members', function (Builder $query) {
+                $query->where('user_id', auth()->id());
+            })->with(['instructor'])
+            ->oldest('date_time')->get();
+
+        return view('member.book')->with('scheduledClasses', $scheduledClasses);
     }
 
     /**
@@ -27,7 +40,21 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $request->validate([
+            'scheduled_class_id' => [
+                'required',
+                'exists:scheduled_classes,id',
+                Rule::unique('bookings')
+                    ->where(function ($query) use ($request) {
+                        return $query->where('user_id', auth()->id())
+                            ->where('scheduled_class_id', $request->input('scheduled_class_id'));
+                    }),
+            ],
+        ]);
+
+        auth()->user()->bookings()->attach($attributes['scheduled_class_id']);
+
+        return to_route('bookings.index');
     }
 
     /**
@@ -35,6 +62,8 @@ class BookingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        auth()->user()->bookings()->detach($id);
+
+        return to_route('bookings.index');
     }
 }

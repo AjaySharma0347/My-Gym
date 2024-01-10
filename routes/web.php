@@ -37,10 +37,10 @@ Route::resource('/instructor/schedule', ScheduledClassController::class)
     ->middleware('role:instructor');
 
 Route::middleware('role:member')->group(function () {
-    Route::get('/member/bookings', [BookingController::class, 'index'])->name('booking.index');
-    Route::get('/member/bookings/create', [BookingController::class, 'create'])->name('booking.create');
-    Route::post('/member/bookings', [BookingController::class, 'store'])->name('booking.store');
-    Route::delete('/member/bookings/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
+    Route::get('/member/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/member/bookings/book', [BookingController::class, 'create'])->name('bookings.create');
+    Route::post('/member/bookings', [BookingController::class, 'store'])->name('bookings.store');
+    Route::delete('/member/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
 });
 
 Route::middleware('auth')->group(function () {
