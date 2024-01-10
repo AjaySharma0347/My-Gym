@@ -22,7 +22,7 @@ class ScheduledClassFactory extends Factory
         return [
             'instructor_id' => User::factory(),
             'class_type_id' => ClassType::factory(),
-            'date_time' => Carbon::now()->addHours(rand(24, 120))->minutes(0)->seconds(0),
+            'date_time' => Carbon::now()->addHours(rand(24, 220))->minutes(0)->seconds(0),
             // 'date_time' => fake()->unique()->dateTimeBetween('now', '+1 month'),
         ];
     }
