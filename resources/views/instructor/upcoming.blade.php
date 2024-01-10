@@ -14,7 +14,7 @@
                      <div class="flex gap-6 justify-between">
                         <div>
                            <p class="text-2xl font-bold text-purple-700">{{ $class->classType->name }}</p>
-                           <span class="text-slate-600 text-sm">{{ $class->classType->minutes }} minutes</span>
+                           <span class="text-slate-600 text-sm">{{ $class->classType->duration_in_minutes }} minutes</span>
                         </div>
                         <div class="text-right flex-shrink-0">
                            <p class="text-lg font-bold">{{ $class->date_time->format('g:i a') }}</p>
