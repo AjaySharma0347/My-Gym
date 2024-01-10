@@ -15,7 +15,7 @@ class ScheduledClassController extends Controller
     public function index()
     {
         $scheduledClasses = auth()->user()->scheduledClasses()
-            ->where('date_time', '>', now())
+            ->upcoming()
             ->oldest('date_time')->get();
 
         return view('instructor.upcoming', [

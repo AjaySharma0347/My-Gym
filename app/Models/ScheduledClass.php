@@ -37,4 +37,16 @@ class ScheduledClass extends Model
     {
         return $this->belongsToMany(User::class, 'bookings')->withTimestamps();
     }
+
+    public function scopeUpcoming($query)
+    {
+        $query->where('date_time', '>', now());
+    }
+
+    public function scopeNotBooked($query)
+    {
+        $query->whereDoesntHave('members', function ($query) {
+            $query->where('user_id', auth()->id());
+        });
+    }
 }
