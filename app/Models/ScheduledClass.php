@@ -23,7 +23,7 @@ class ScheduledClass extends Model
 
     public function instructor()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function classType()
