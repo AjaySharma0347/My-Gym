@@ -11,9 +11,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
-class NotifyClassCanceled implements ShouldQueue
+class NotifyClassCanceled
 {
-    use InteractsWithQueue;
     /**
      * Create the event listener.
      */
@@ -39,8 +38,8 @@ class NotifyClassCanceled implements ShouldQueue
         //     Mail::to($user)->send(new ClassCanceledMail($details));
         // });
 
-        Notification::send($members, new ClassCanceledNotification($details));
+        // Notification::send($members, new ClassCanceledNotification($details));
 
-        // NotifyClassCanceledJob::dispatch($members, $details);
+        NotifyClassCanceledJob::dispatch($members, $details);
     }
 }
