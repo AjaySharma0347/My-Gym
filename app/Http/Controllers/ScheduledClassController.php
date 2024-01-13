@@ -78,8 +78,8 @@ class ScheduledClassController extends Controller
 
         ClassCanceled::dispatch($schedule);
 
-        // $schedule->members()->detach();
-        // $schedule->delete();
+        // $schedule->members()->detach(); //not needed due to cascadeOnDelete constraint
+        $schedule->delete();
 
         return to_route('schedule.index');
     }
