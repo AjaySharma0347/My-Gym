@@ -4,9 +4,11 @@ namespace App\Listeners;
 
 use App\Events\ClassCanceled;
 use App\Mail\ClassCanceledMail;
+use App\Notifications\ClassCanceledNotification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class NotifyClassCanceled
 {
@@ -30,9 +32,11 @@ class NotifyClassCanceled
 
         $details = compact('className', 'classDateTime');
 
-        $members->each(function ($user) use ($details) {
-            $details['member'] = $user->name;
-            Mail::to($user)->send(new ClassCanceledMail($details));
-        });
+        // $members->each(function ($user) use ($details) {
+        //     $details['member'] = $user->name;
+        //     Mail::to($user)->send(new ClassCanceledMail($details));
+        // });
+
+        Notification::send($members, new ClassCanceledNotification($details));
     }
 }
