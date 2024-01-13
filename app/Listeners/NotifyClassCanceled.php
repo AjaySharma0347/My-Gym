@@ -31,6 +31,7 @@ class NotifyClassCanceled
         $details = compact('className', 'classDateTime');
 
         $members->each(function ($user) use ($details) {
+            $details['member'] = $user->name;
             Mail::to($user)->send(new ClassCanceledMail($details));
         });
     }
