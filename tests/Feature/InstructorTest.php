@@ -61,8 +61,7 @@ class InstructorTest extends TestCase
         $scheduledClass = ScheduledClass::factory()->create([
             'instructor_id' => $user->id,
             'class_type_id' => ClassType::first()->id,
-            'date_time' => '2025-01-13 17:00:00',
-
+            'date_time' => now()->addDays(3)->second(1),
         ]);
 
         //When
@@ -74,5 +73,32 @@ class InstructorTest extends TestCase
             'id' => $scheduledClass->id,
         ]);
         $response->assertRedirectToRoute('schedule.index');
+    }
+
+
+    public function test_instructor_cannot_cancel_class_less_than_two_hours_before()
+    {
+        $user = User::factory()->create([
+            'email' => 'mario@gmail.com',
+            'role' => 'instructor'
+        ]);
+        ClassType::factory()->create();
+        $scheduledClass = ScheduledClass::factory()->create([
+            'instructor_id' => $user->id,
+            'class_type_id' => ClassType::first()->id,
+            'date_time' => now()->addHour(),
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get('instructor/schedule');
+
+        $response->assertDontSeeText('Cancel');
+
+        $response = $this->actingAs($user)
+            ->delete("instructor/schedule/$scheduledClass->id");
+
+        $this->assertDatabaseHas('scheduled_classes', [
+            'id' => $scheduledClass->id,
+        ]);
     }
 }
