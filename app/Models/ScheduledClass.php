@@ -50,3 +50,4 @@ class ScheduledClass extends Model
         });
     }
 }
+

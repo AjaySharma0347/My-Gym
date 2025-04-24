@@ -67,3 +67,4 @@ class BookingController extends Controller
         return to_route('bookings.index');
     }
 }
+
